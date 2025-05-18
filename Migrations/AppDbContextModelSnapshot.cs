@@ -70,7 +70,7 @@ namespace ApiLaBodeguita.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Productos");
+                    b.ToTable("Producto");
                 });
 
             modelBuilder.Entity("ApiLaBodeguita.Models.Usuario", b =>
