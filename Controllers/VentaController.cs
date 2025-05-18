@@ -18,7 +18,7 @@ namespace ApiLaBodeguita.Controllers
 
         // GET: api/ventas
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Venta>>> GetVentas()
+        public async Task<ActionResult> GetVentas()
         {
             try
             {
@@ -28,13 +28,30 @@ namespace ApiLaBodeguita.Controllers
                         .ThenInclude(d => d.Producto)
                     .ToListAsync();
 
-                return ventas;
+                // Validaciones antes de devolver
+                foreach (var v in ventas)
+                {
+                    if (v.Usuario == null)
+                        return StatusCode(500, $"Error: La venta con ID {v.Id} no tiene Usuario asociado.");
+
+                    foreach (var d in v.Detalles)
+                    {
+                        if (d.Producto == null)
+                            return StatusCode(500, $"Error: El detalle con ID {d.Id} no tiene Producto asociado.");
+                    }
+                }
+
+                return Ok(ventas);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Error interno en el servidor: {ex.Message}");
+                return Problem(
+                    detail: ex.InnerException?.Message ?? ex.Message,
+                    title: "Error al obtener ventas",
+                    statusCode: 500);
             }
         }
+
 
         // GET: api/ventas/{id}
         [HttpGet("{id}")]
