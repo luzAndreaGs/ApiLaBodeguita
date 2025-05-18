@@ -17,7 +17,7 @@ namespace ApiLaBodeguita.Controllers
 
         // GET: api/producto
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Producto>>> GetProductos()
+        public async Task<ActionResult<IEnumerable<Producto>>> GetProducto()
         {
             return await _context.Producto.ToListAsync();
         }
@@ -29,7 +29,7 @@ namespace ApiLaBodeguita.Controllers
             _context.Producto.Add(producto);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetProductos), new { id = producto.Id }, producto);
+            return CreatedAtAction(nameof(GetProducto), new { id = producto.Id }, producto);
         }
 
         // PUT: api/producto/5
