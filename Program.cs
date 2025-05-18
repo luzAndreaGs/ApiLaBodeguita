@@ -17,9 +17,11 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddControllers().AddJsonOptions(x =>
 {
-    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+    x.JsonSerializerOptions.PropertyNamingPolicy = null;
     x.JsonSerializerOptions.WriteIndented = true;
+    x.JsonSerializerOptions.ReferenceHandler = null; 
 });
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
