@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ApiLaBodeguita.Models;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace ApiLaBodeguita.Controllers
 {
@@ -52,6 +53,19 @@ namespace ApiLaBodeguita.Controllers
 
             if (usuario.Contrasena != HashearContrasena(login.Contrasena))
                 return Unauthorized("Contraseña incorrecta.");
+
+            return Ok(usuario);
+        }
+
+        // GET: api/usuarios/loginSocial?usuarioLogin=correo&proveedor=Google
+        [HttpGet("loginSocial")]
+        public async Task<ActionResult<Usuario>> LoginSocial(string usuarioLogin, string proveedor)
+        {
+            var usuario = await _context.Usuarios
+                .FirstOrDefaultAsync(u => u.UsuarioLogin == usuarioLogin && u.Proveedor == proveedor);
+
+            if (usuario == null)
+                return NotFound("Usuario no registrado con ese proveedor.");
 
             return Ok(usuario);
         }
