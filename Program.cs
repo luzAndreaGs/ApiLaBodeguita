@@ -19,7 +19,7 @@ builder.Services.AddControllers().AddJsonOptions(x =>
 {
     x.JsonSerializerOptions.PropertyNamingPolicy = null;
     x.JsonSerializerOptions.WriteIndented = true;
-    x.JsonSerializerOptions.ReferenceHandler = null; 
+    x.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
 });
 
 
