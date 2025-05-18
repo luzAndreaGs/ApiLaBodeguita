@@ -21,11 +21,15 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Mostrar Swagger tanto en desarrollo como producción
+app.Urls.Add("http://*:10000"); // Render usará este puerto
+
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection(); // Comenta o elimina esta línea en Rende
+
 app.UseAuthorization();
+
 app.MapControllers();
+
 app.Run();
