@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApiLaBodeguita.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250518180233_AjustesEnModelos")]
-    partial class AjustesEnModelos
+    [Migration("20250518182215_Inicial")]
+    partial class Inicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,8 +29,8 @@ namespace ApiLaBodeguita.Migrations
                     b.Property<int>("Cantidad")
                         .HasColumnType("INTEGER");
 
-                    b.Property<decimal>("PrecioUnitario")
-                        .HasColumnType("decimal(10,2)");
+                    b.Property<double>("PrecioUnitario")
+                        .HasColumnType("REAL");
 
                     b.Property<int>("ProductoId")
                         .HasColumnType("INTEGER");
@@ -55,7 +55,6 @@ namespace ApiLaBodeguita.Migrations
 
                     b.Property<string>("CodigoBarras")
                         .IsRequired()
-                        .HasMaxLength(20)
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Existencia")
@@ -63,16 +62,14 @@ namespace ApiLaBodeguita.Migrations
 
                     b.Property<string>("Marca")
                         .IsRequired()
-                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("Precio")
-                        .HasColumnType("decimal(10,2)");
+                    b.Property<double>("Precio")
+                        .HasColumnType("REAL");
 
                     b.HasKey("Id");
 
@@ -87,7 +84,6 @@ namespace ApiLaBodeguita.Migrations
 
                     b.Property<string>("Contrasena")
                         .IsRequired()
-                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("EsAdministrador")
@@ -95,17 +91,14 @@ namespace ApiLaBodeguita.Migrations
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Proveedor")
                         .IsRequired()
-                        .HasMaxLength(20)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("UsuarioLogin")
                         .IsRequired()
-                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -126,8 +119,8 @@ namespace ApiLaBodeguita.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(10,2)");
+                    b.Property<double>("Total")
+                        .HasColumnType("REAL");
 
                     b.Property<int>("UsuarioId")
                         .HasColumnType("INTEGER");
@@ -142,7 +135,7 @@ namespace ApiLaBodeguita.Migrations
             modelBuilder.Entity("ApiLaBodeguita.Models.DetalleVenta", b =>
                 {
                     b.HasOne("ApiLaBodeguita.Models.Producto", "Producto")
-                        .WithMany("DetallesVenta")
+                        .WithMany()
                         .HasForeignKey("ProductoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -161,22 +154,12 @@ namespace ApiLaBodeguita.Migrations
             modelBuilder.Entity("ApiLaBodeguita.Models.Venta", b =>
                 {
                     b.HasOne("ApiLaBodeguita.Models.Usuario", "Usuario")
-                        .WithMany("Ventas")
+                        .WithMany()
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Usuario");
-                });
-
-            modelBuilder.Entity("ApiLaBodeguita.Models.Producto", b =>
-                {
-                    b.Navigation("DetallesVenta");
-                });
-
-            modelBuilder.Entity("ApiLaBodeguita.Models.Usuario", b =>
-                {
-                    b.Navigation("Ventas");
                 });
 
             modelBuilder.Entity("ApiLaBodeguita.Models.Venta", b =>
