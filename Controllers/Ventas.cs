@@ -52,7 +52,7 @@ namespace ApiLaBodeguita.Controllers
             double total = 0;
             foreach (var detalle in venta.Detalles)
             {
-                var producto = await _context.Productos.FindAsync(detalle.ProductoId);
+                var producto = await _context.Producto.FindAsync(detalle.ProductoId);
                 if (producto == null)
                     return BadRequest($"Producto con ID {detalle.ProductoId} no encontrado.");
 
