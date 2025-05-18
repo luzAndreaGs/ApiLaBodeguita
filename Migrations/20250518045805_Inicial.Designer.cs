@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApiLaBodeguita.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250518044908_Inicial")]
+    [Migration("20250518045805_Inicial")]
     partial class Inicial
     {
         /// <inheritdoc />
