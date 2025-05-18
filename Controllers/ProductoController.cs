@@ -6,11 +6,11 @@ namespace ApiLaBodeguita.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductosController : ControllerBase
+    public class ProductoController : ControllerBase
     {
         private readonly AppDbContext _context;
 
-        public ProductosController(AppDbContext context)
+        public ProductoController(AppDbContext context)
         {
             _context = context;
         }
