@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.UseUrls("http://+:80");
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite("Data Source= Producto.db"));
+    options.UseSqlite("Data Source= producto.db"));
 
 builder.Services.AddControllers().AddJsonOptions(x =>
 {
