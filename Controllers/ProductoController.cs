@@ -15,14 +15,14 @@ namespace ApiLaBodeguita.Controllers
             _context = context;
         }
 
-        // GET: api/productos
+        // GET: api/producto
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Producto>>> GetProductos()
         {
             return await _context.Productos.ToListAsync();
         }
 
-        // POST: api/productos
+        // POST: api/producto
         [HttpPost]
         public async Task<ActionResult<Producto>> PostProducto(Producto producto)
         {
@@ -32,7 +32,7 @@ namespace ApiLaBodeguita.Controllers
             return CreatedAtAction(nameof(GetProductos), new { id = producto.Id }, producto);
         }
 
-        // PUT: api/productos/5
+        // PUT: api/producto/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProducto(int id, Producto producto)
         {
@@ -57,7 +57,7 @@ namespace ApiLaBodeguita.Controllers
         }
 
 
-        // DELETE: api/productos/5
+        // DELETE: api/producto/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProducto(int id)
         {
