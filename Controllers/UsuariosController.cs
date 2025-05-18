@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ApiLaBodeguita.Models;
+using ApiLaBodeguita.Dtos;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.Json.Serialization;
 
 namespace ApiLaBodeguita.Controllers
 {
@@ -27,13 +27,18 @@ namespace ApiLaBodeguita.Controllers
 
         // POST: api/usuarios
         [HttpPost]
-        public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
+        public async Task<ActionResult<Usuario>> PostUsuario(UsuarioDTO usuarioDto)
         {
-            // Si el proveedor es "Manual", hasheamos la contraseña
-            if (usuario.Proveedor == "Manual" && !string.IsNullOrEmpty(usuario.Contrasena))
+            var usuario = new Usuario
             {
-                usuario.Contrasena = HashearContrasena(usuario.Contrasena);
-            }
+                Nombre = usuarioDto.Nombre,
+                UsuarioLogin = usuarioDto.UsuarioLogin,
+                Proveedor = usuarioDto.Proveedor,
+                EsAdministrador = usuarioDto.EsAdministrador,
+                Contrasena = usuarioDto.Proveedor == "Manual" && !string.IsNullOrEmpty(usuarioDto.Contrasena)
+                    ? HashearContrasena(usuarioDto.Contrasena)
+                    : ""
+            };
 
             _context.Usuarios.Add(usuario);
             await _context.SaveChangesAsync();
