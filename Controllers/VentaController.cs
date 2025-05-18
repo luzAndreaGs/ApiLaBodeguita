@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ApiLaBodeguita.Models;
+using ApiLaBodeguita.Dtos;
 
 namespace ApiLaBodeguita.Controllers
 {
@@ -44,31 +45,27 @@ namespace ApiLaBodeguita.Controllers
 
         // POST: api/ventas
         [HttpPost]
-        public async Task<ActionResult<Venta>> PostVenta(Venta venta)
+        public async Task<IActionResult> PostVenta([FromBody] VentaDTO ventaDto)
         {
-            venta.Fecha = DateTime.Now;
-
-            // Calcular total y guardar copia del precio unitario
-            double total = 0;
-            foreach (var detalle in venta.Detalles)
+            var venta = new Venta
             {
-                var producto = await _context.Producto.FindAsync(detalle.ProductoId);
-                if (producto == null)
-                    return BadRequest($"Producto con ID {detalle.ProductoId} no encontrado.");
-
-                detalle.PrecioUnitario = producto.Precio;
-                total += producto.Precio * detalle.Cantidad;
-
-                // Descontar existencias (opcional)
-                producto.Existencia -= detalle.Cantidad;
-            }
-
-            venta.Total = total;
+                Fecha = DateTime.Now,
+                UsuarioId = ventaDto.UsuarioId,
+                MetodoPago = ventaDto.MetodoPago,
+                Total = ventaDto.Total,
+                Detalles = ventaDto.Detalles.Select(d => new DetalleVenta
+                {
+                    ProductoId = d.ProductoId,
+                    Cantidad = d.Cantidad,
+                    PrecioUnitario = _context.Producto.First(p => p.Id == d.ProductoId).Precio
+                }).ToList()
+            };
 
             _context.Ventas.Add(venta);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetVenta), new { id = venta.Id }, venta);
+            return Ok(new { mensaje = "Venta registrada correctamente", venta.Id });
         }
+
     }
 }
