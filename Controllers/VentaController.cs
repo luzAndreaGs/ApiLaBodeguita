@@ -89,9 +89,10 @@ namespace ApiLaBodeguita.Controllers
                     {
                         ProductoId = d.ProductoId,
                         Cantidad = d.Cantidad,
-                        PrecioUnitario = _context.Producto.First(p => p.Id == d.ProductoId).Precio
+                        PrecioUnitario = (double)_context.Producto.First(p => p.Id == d.ProductoId).Precio
                     }).ToList()
                 };
+
 
                 _context.Ventas.Add(venta);
                 await _context.SaveChangesAsync();
