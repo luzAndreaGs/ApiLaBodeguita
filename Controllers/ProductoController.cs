@@ -19,14 +19,14 @@ namespace ApiLaBodeguita.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Producto>>> GetProductos()
         {
-            return await _context.Productos.ToListAsync();
+            return await _context.Producto.ToListAsync();
         }
 
         // POST: api/producto
         [HttpPost]
         public async Task<ActionResult<Producto>> PostProducto(Producto producto)
         {
-            _context.Productos.Add(producto);
+            _context.Producto.Add(producto);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetProductos), new { id = producto.Id }, producto);
@@ -47,7 +47,7 @@ namespace ApiLaBodeguita.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!_context.Productos.Any(p => p.Id == id))
+                if (!_context.Producto.Any(p => p.Id == id))
                     return NotFound();
                 else
                     throw;
@@ -61,11 +61,11 @@ namespace ApiLaBodeguita.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProducto(int id)
         {
-            var producto = await _context.Productos.FindAsync(id);
+            var producto = await _context.Producto.FindAsync(id);
             if (producto == null)
                 return NotFound();
 
-            _context.Productos.Remove(producto);
+            _context.Producto.Remove(producto);
             await _context.SaveChangesAsync();
 
             return NoContent();
