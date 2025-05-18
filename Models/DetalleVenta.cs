@@ -21,6 +21,6 @@ namespace ApiLaBodeguita.Models
         public int Cantidad { get; set; }
 
         [Required]
-        public double PrecioUnitario { get; set; } // Se guarda por si cambia luego en productos
+        public double PrecioUnitario { get; set; } 
     }
 }
