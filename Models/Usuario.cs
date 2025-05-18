@@ -12,11 +12,13 @@ namespace ApiLaBodeguita.Models
         [Required]
         public string UsuarioLogin { get; set; }
 
+        [System.Text.Json.Serialization.JsonIgnore]
         public string Contrasena { get; set; }
 
         [Required]
         public string Proveedor { get; set; }
 
         public bool EsAdministrador { get; set; } = false;
+
     }
 }
