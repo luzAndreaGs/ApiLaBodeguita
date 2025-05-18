@@ -13,13 +13,15 @@ namespace ApiLaBodeguita.Models
         [Required]
         public int UsuarioId { get; set; }
 
-        public Usuario? Usuario { get; set; } 
+        [ForeignKey("UsuarioId")]
+        public Usuario Usuario { get; set; }
 
         [Required]
-        public double Total { get; set; }
+        [Column(TypeName = "decimal(10,2)")]
+        public decimal Total { get; set; }
 
-        public string MetodoPago { get; set; } // Efectivo, Tarjeta, etc.
+        public string MetodoPago { get; set; }
 
-        public ICollection<DetalleVenta> Detalles { get; set; }
+        public ICollection<DetalleVenta> Detalles { get; set; } = new List<DetalleVenta>();
     }
 }

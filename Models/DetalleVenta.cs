@@ -10,17 +10,20 @@ namespace ApiLaBodeguita.Models
         [Required]
         public int VentaId { get; set; }
 
-        public Venta? Venta { get; set; }
+        [ForeignKey("VentaId")]
+        public Venta Venta { get; set; }
 
         [Required]
         public int ProductoId { get; set; }
 
-        public Producto? Producto { get; set; }
+        [ForeignKey("ProductoId")]
+        public Producto Producto { get; set; }
 
         [Required]
         public int Cantidad { get; set; }
 
         [Required]
-        public double PrecioUnitario { get; set; } 
+        [Column(TypeName = "decimal(10,2)")]
+        public decimal PrecioUnitario { get; set; }
     }
 }
